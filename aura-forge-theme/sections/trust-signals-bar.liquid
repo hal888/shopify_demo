@@ -1,0 +1,122 @@
+{%- style -%}
+  .trust-signals-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+<div class="trust-signals-bar trust-signals-{{ section.id }}">
+  <div class="trust-signals-container">
+    {%- for block in section.blocks -%}
+      <div class="trust-signal-item" {{ block.shopify_attributes }}>
+        <div class="trust-signal-icon">{{ block.settings.icon }}</div>
+        <div class="trust-signal-title">{{ block.settings.title }}</div>
+        <div class="trust-signal-desc">{{ block.settings.description }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AURA 信任背书栏",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "背景底色",
+      "default": "#F8FAFC"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "上内边距",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "下内边距",
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "type": "signal",
+      "name": "信任背书项",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "图标 (Emoji 或字符)",
+          "default": "🛡️"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "标题",
+          "default": "11-Gauge 工业钢材"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "简短说明",
+          "default": "3\" x 3\" 重型立柱 · 终身结构质保"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "AURA 信任背书栏",
+      "blocks": [
+        {
+          "type": "signal",
+          "settings": {
+            "icon": "🔩",
+            "title": "11-Gauge 工业钢材",
+            "description": "3\" x 3\" 重工立柱与精密激光孔位"
+          }
+        },
+        {
+          "type": "signal",
+          "settings": {
+            "icon": "🚛",
+            "title": "专业 LTL 托盘送达",
+            "description": "重货专线入户保障与运损包赔"
+          }
+        },
+        {
+          "type": "signal",
+          "settings": {
+            "icon": "🛡️",
+            "title": "终身主框架质保",
+            "description": "商用级焊接工艺 · 终身质保承诺"
+          }
+        },
+        {
+          "type": "signal",
+          "settings": {
+            "icon": "⭐",
+            "title": "4.9 / 5.0 好评认证",
+            "description": "2,500+ 专业力量馆与家庭背书"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

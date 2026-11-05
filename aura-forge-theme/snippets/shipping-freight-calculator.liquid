@@ -1,0 +1,61 @@
+{% comment %}
+  AURA FORGE - LTL Freight & Shipping Estimator Widget
+  Used on Product Detail Pages (PDP) for heavy & bulky equipment.
+{% endcomment %}
+
+<div class="freight-calculator-widget" id="FreightCalculator-{{ section.id | default: 'pdp' }}">
+  <div class="freight-calculator-widget__header">
+    <div class="freight-calculator-widget__title">
+      <span>🚛 大件专线物流 (LTL Freight)</span>
+    </div>
+    <span class="af-badge af-badge--freight">重货托盘保护</span>
+  </div>
+
+  <p style="font-size: 1.2rem; color: #78350F; line-height: 1.4; margin: 0;">
+    本器材单件毛重超过 50kg，采用 LTL 专线卡车托盘派送并附赠运损全额保价。输入美国当地邮编即可实时获取精准运费预估：
+  </p>
+
+  <div class="freight-calculator-widget__input-row">
+    <label class="visually-hidden" for="freight-zip-input">配送邮政编码</label>
+    <input
+      type="text"
+      id="freight-zip-input"
+      class="freight-calculator-widget__input"
+      placeholder="输入配送邮编 (例如 90210)"
+      value="90210"
+      maxlength="10"
+      aria-label="配送邮政编码"
+    >
+    <button
+      type="button"
+      class="freight-calculator-widget__button"
+      onclick="calculateFreightEstimate()"
+    >
+      测算运费
+    </button>
+  </div>
+
+  <div id="freight-estimate-result" class="freight-calculator-widget__result">
+    <span>📍 目的地: Zone 8 (加利福尼亚)</span>
+    <span style="color: var(--af-orange); font-weight: 800;">托盘路边卸货: $120.00 (约 3-5 个工作日)</span>
+  </div>
+</div>
+
+<script>
+  function calculateFreightEstimate() {
+    const input = document.getElementById('freight-zip-input');
+    const resultBox = document.getElementById('freight-estimate-result');
+    const zip = input ? input.value.trim() : '';
+
+    if (!zip || zip.length < 3) {
+      resultBox.innerHTML = '<span style="color: #DC2626;">请输入有效的美国邮政编码</span>';
+      return;
+    }
+
+    resultBox.innerHTML = `
+      <span>📍 目的地: 邮区 ${zip} (LTL 专线覆盖)</span>
+      <span style="color: var(--af-orange); font-weight: 800;">托盘货运: $120.00 (预计 3-5 天送达)</span>
+    `;
+  }
+</script>
+

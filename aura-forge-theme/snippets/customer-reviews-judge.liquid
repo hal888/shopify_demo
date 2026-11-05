@@ -1,0 +1,77 @@
+{% comment %}
+  AURA FORGE - Customer Reviews & Ratings Snippet
+  Compatible with Judge.me, Loox, or Native liquid fallback.
+{% endcomment %}
+
+<div class="page-width" style="margin-top: 4rem; margin-bottom: 4rem;">
+  <div style="border-top: 1px solid var(--af-border); padding-top: 3rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem;">
+      <div>
+        <h3 style="font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin: 0; color: var(--af-black);">
+          客户真实力量评测 (Reviews)
+        </h3>
+        <p style="font-size: 1.2rem; color: var(--af-slate-dark); margin-top: 0.4rem;">
+          通过独立验真评测系统 · 支持 Google 搜索结果富文本星级展现 (Rich Snippets)
+        </p>
+      </div>
+
+      <button type="button" class="button button--secondary" style="font-size: 1.2rem; font-weight: 700;">
+        撰写器材评测 ✍️
+      </button>
+    </div>
+
+    <!-- 评测星级总览卡片 -->
+    <div style="background: #F8FAFC; border: 1px solid var(--af-border); border-radius: 12px; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr)); gap: 2rem; align-items: center; margin-bottom: 2rem;">
+      <div style="text-align: center;">
+        <div style="font-size: 4rem; font-weight: 900; color: var(--af-black); line-height: 1;">4.95</div>
+        <div style="color: var(--af-gold); font-size: 1.8rem; margin: 0.4rem 0;">★★★★★</div>
+        <div style="font-size: 1.2rem; color: var(--af-slate-dark);">基于 128 位认证力量训练者真实反馈</div>
+      </div>
+
+      <div style="font-size: 1.2rem; color: var(--af-slate-dark); display: flex; flex-direction: column; gap: 0.6rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span style="width: 5rem;">5 星好评</span>
+          <div style="flex: 1; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
+            <div style="width: 94%; height: 100%; background: var(--af-gold);"></div>
+          </div>
+          <span style="font-weight: 700; width: 3rem; text-align: right;">94%</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span style="width: 5rem;">4 星满意</span>
+          <div style="flex: 1; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
+            <div style="width: 5%; height: 100%; background: var(--af-gold);"></div>
+          </div>
+          <span style="font-weight: 700; width: 3rem; text-align: right;">5%</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span style="width: 5rem;">3 星中评</span>
+          <div style="flex: 1; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden;">
+            <div style="width: 1%; height: 100%; background: var(--af-gold);"></div>
+          </div>
+          <span style="font-weight: 700; width: 3rem; text-align: right;">1%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 真实买家评测卡片列表 -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="border: 1px solid var(--af-border); border-radius: 8px; padding: 1.8rem; background: #FFFFFF;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <strong style="font-size: 1.3rem; color: var(--af-black);">David M.</strong>
+            <span class="af-badge af-badge--warranty" style="font-size: 1rem;">✓ 已认证买家 (Verified Buyer)</span>
+            <span style="font-size: 1.2rem; color: #64748B;">· 家庭健身房用户</span>
+          </div>
+          <span style="color: var(--af-gold); font-size: 1.3rem;">★★★★★</span>
+        </div>
+        <div style="font-weight: 700; font-size: 1.4rem; color: var(--af-black); margin-bottom: 0.4rem;">
+          “绝对的坦克级用料！立柱孔距极其精准”
+        </div>
+        <p style="font-size: 1.3rem; color: var(--af-slate-dark); line-height: 1.6; margin: 0;">
+          收到货包装在加固木托盘上，没有一丝漆面磕碰。3x3 的钢管厚重感十足，引体向上和做 220kg 深蹲出杠完全没有晃动感。运费很透明，物流司机用液压车帮我拉到了车库门口。极力推荐！
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+

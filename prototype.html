@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA FORGE - Shopify 健身器材独立站 交互原型与设计规范</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* 滚动条美化 */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+    .badge-freight { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+    .badge-warranty { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen antialiased flex flex-col font-sans">
+
+  <!-- 顶部控制台 Bar -->
+  <header class="bg-slate-950 border-b border-slate-800 sticky top-0 z-50 px-4 py-3 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center font-black text-slate-950 text-xl tracking-tighter">
+          ⚡
+        </div>
+        <div>
+          <div class="text-sm font-bold tracking-wider uppercase text-white flex items-center gap-2">
+            AURA FORGE <span class="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 font-medium">阶段 1 原型系统</span>
+          </div>
+          <div class="text-xs text-slate-400">Shopify Fitness & Gym Equipment DTC Storefront</div>
+        </div>
+      </div>
+
+      <!-- 视图切换 Tabs -->
+      <nav class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs font-medium">
+        <button onclick="switchTab('homepage')" id="btn-homepage" class="tab-btn px-3 py-1.5 rounded-lg transition-all text-white bg-orange-500 shadow-sm font-semibold">
+          1. 首页原型 (Home)
+        </button>
+        <button onclick="switchTab('pdp')" id="btn-pdp" class="tab-btn px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white">
+          2. 商品详情页 (PDP)
+        </button>
+        <button onclick="switchTab('megamenu')" id="btn-megamenu" class="tab-btn px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white">
+          3. Mega Menu 导航
+        </button>
+        <button onclick="switchTab('design-system')" id="btn-design-system" class="tab-btn px-3 py-1.5 rounded-lg transition-all text-slate-400 hover:text-white">
+          4. 视觉规范与调色板
+        </button>
+      </nav>
+
+      <!-- 视口宽度模拟切换 -->
+      <div class="flex items-center space-x-1.5 bg-slate-900 px-2 py-1 rounded-lg border border-slate-800 text-xs">
+        <span class="text-slate-400 mr-1 text-[11px]">设备视图:</span>
+        <button onclick="setViewport('desktop')" id="vp-desktop" class="vp-btn px-2 py-1 rounded bg-slate-800 text-orange-400 font-medium" title="桌面端 100%">
+          🖥️ Desktop
+        </button>
+        <button onclick="setViewport('mobile')" id="vp-mobile" class="vp-btn px-2 py-1 rounded text-slate-400 hover:text-white" title="移动端 390px">
+          📱 Mobile
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体工作区容器 -->
+  <main class="flex-1 flex justify-center p-2 sm:p-4 bg-slate-950/60 overflow-x-hidden">
+    <div id="viewport-container" class="w-full max-w-7xl transition-all duration-300 bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden border border-slate-800/40 relative">
+
+      <!-- =============================================================== -->
+      <!-- 通用店铺导航 Header (Simulated Shopify Storefront Header) -->
+      <!-- =============================================================== -->
+      <div class="storefront-header border-b border-slate-100 bg-white sticky top-0 z-40">
+        <!-- 顶部公告栏 (Announcement Bar) -->
+        <div class="bg-slate-900 text-slate-200 text-xs py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+          <span>大件器材限时特惠：全美托盘货运享受 50% 运费减免 | 小配件满 $99 免运费</span>
+        </div>
+
+        <!-- 导航主体 -->
+        <div class="px-6 py-4 flex items-center justify-between">
+          <div class="flex items-center space-x-8">
+            <a href="javascript:void(0)" onclick="switchTab('homepage')" class="flex items-center space-x-2">
+              <span class="text-2xl font-black tracking-tight text-slate-950 uppercase">
+                AURA<span class="text-orange-500">FORGE</span>
+              </span>
+            </a>
+            <!-- 桌面主菜单项 -->
+            <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-700">
+              <div class="relative group cursor-pointer" onclick="switchTab('megamenu')">
+                <span class="hover:text-orange-500 flex items-center gap-1">
+                  力量器械 (Strength)
+                  <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
+              </div>
+              <a href="javascript:void(0)" onclick="switchTab('megamenu')" class="hover:text-orange-500 transition-colors">有氧器械 (Cardio)</a>
+              <a href="javascript:void(0)" onclick="switchTab('megamenu')" class="hover:text-orange-500 transition-colors">配件/杠铃片 (Accessories)</a>
+              <a href="javascript:void(0)" onclick="switchTab('pdp')" class="hover:text-orange-500 transition-colors text-orange-600 font-bold">🔥 爆款深蹲架 (PDP 演示)</a>
+            </div>
+          </div>
+
+          <!-- 右侧动作图标 -->
+          <div class="flex items-center space-x-4 text-slate-700">
+            <button class="p-1.5 hover:text-orange-500 text-sm hidden sm:flex items-center gap-1.5 text-slate-600">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <span>搜索器材</span>
+            </button>
+            <div class="h-4 w-px bg-slate-200 hidden sm:block"></div>
+            <button class="relative p-1.5 hover:text-orange-500 text-slate-800 font-semibold flex items-center gap-1">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <span class="absolute -top-1 -right-1 bg-orange-500 text-white rounded-full text-[10px] w-4 h-4 flex items-center justify-center font-bold">1</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 1: 首页交互原型 (Homepage Prototype) -->
+      <!-- =============================================================== -->
+      <div id="content-homepage" class="tab-content block">
+        <!-- Hero Section -->
+        <section class="relative bg-slate-950 text-white overflow-hidden py-16 sm:py-24 px-6 sm:px-12">
+          <div class="absolute inset-0 opacity-25 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:24px_24px]"></div>
+          <div class="relative max-w-4xl mx-auto text-center space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-semibold tracking-wide uppercase">
+              ⚡ 商用级 11-Gauge 重工结构 · 终身框架质保
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight uppercase leading-tight">
+              铸就极致力量 <br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500">
+                PRO-SERIES HOME GYM
+              </span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+              专为严苛力量训练而生。从微型空间可调哑铃到专业级全尺寸深蹲笼，精准参数、极简美学，打造您专属的顶级训练阵地。
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <button onclick="switchTab('pdp')" class="px-8 py-3.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-slate-950 font-black text-sm tracking-wide uppercase transition-all shadow-lg shadow-orange-500/25">
+                查看旗舰深蹲架 PDP →
+              </button>
+              <button onclick="switchTab('megamenu')" class="px-8 py-3.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-all border border-slate-700">
+                浏览全部类目
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 信任背书四大徽章 (Trust Signals) -->
+        <section class="border-y border-slate-200 bg-slate-50 py-6 px-6">
+          <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="space-y-1">
+              <div class="text-orange-500 font-bold text-lg">11-Gauge 钢材</div>
+              <div class="text-xs text-slate-600 font-medium">3" x 3" 重型工业立柱规格</div>
+            </div>
+            <div class="space-y-1">
+              <div class="text-orange-500 font-bold text-lg">专业 LTL 托盘送达</div>
+              <div class="text-xs text-slate-600 font-medium">重货专线入户保障/运损包赔</div>
+            </div>
+            <div class="space-y-1">
+              <div class="text-orange-500 font-bold text-lg">终身结构质保</div>
+              <div class="text-xs text-slate-600 font-medium">主框架终身质保承诺</div>
+            </div>
+            <div class="space-y-1">
+              <div class="text-orange-500 font-bold text-lg">4.9 / 5.0 好评</div>
+              <div class="text-xs text-slate-600 font-medium">2,500+ 专业力量馆与家庭背书</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 三大类目入口 Grid (Category Showcase) -->
+        <section class="py-12 px-6 max-w-6xl mx-auto">
+          <div class="flex justify-between items-end mb-8">
+            <div>
+              <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Categories</span>
+              <h2 class="text-2xl font-black text-slate-950 uppercase tracking-tight">核心器材分类</h2>
+            </div>
+            <a href="javascript:void(0)" onclick="switchTab('megamenu')" class="text-xs font-bold text-slate-700 hover:text-orange-600 flex items-center gap-1">
+              全部器材清单 →
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- 力量区 -->
+            <div onclick="switchTab('pdp')" class="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 h-80 p-6 flex flex-col justify-end text-white cursor-pointer hover:shadow-xl transition-all">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent z-10"></div>
+              <div class="absolute top-4 right-4 z-20 px-2.5 py-1 rounded-full bg-orange-500 text-slate-950 text-xs font-bold uppercase">
+                旗舰热销
+              </div>
+              <div class="relative z-20 space-y-2">
+                <h3 class="text-xl font-bold uppercase group-hover:text-orange-400 transition-colors">力量训练 (Strength)</h3>
+                <p class="text-xs text-slate-300">深蹲架、卧推凳、奥林匹克杠铃杆、可调哑铃</p>
+                <div class="text-xs font-semibold text-orange-400 flex items-center gap-1 pt-1">
+                  进入选购 <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 有氧区 -->
+            <div onclick="switchTab('megamenu')" class="group relative rounded-2xl overflow-hidden bg-slate-800 border border-slate-200 h-80 p-6 flex flex-col justify-end text-white cursor-pointer hover:shadow-xl transition-all">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent z-10"></div>
+              <div class="relative z-20 space-y-2">
+                <h3 class="text-xl font-bold uppercase group-hover:text-orange-400 transition-colors">有氧器械 (Cardio)</h3>
+                <p class="text-xs text-slate-300">风阻划船机、商用静音动感单车、滑雪训练机</p>
+                <div class="text-xs font-semibold text-orange-400 flex items-center gap-1 pt-1">
+                  进入选购 <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 配件区 -->
+            <div onclick="switchTab('megamenu')" class="group relative rounded-2xl overflow-hidden bg-slate-700 border border-slate-200 h-80 p-6 flex flex-col justify-end text-white cursor-pointer hover:shadow-xl transition-all">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent z-10"></div>
+              <div class="relative z-20 space-y-2">
+                <h3 class="text-xl font-bold uppercase group-hover:text-orange-400 transition-colors">配件周边 (Accessories)</h3>
+                <p class="text-xs text-slate-300">防滑训练地垫、快速卡扣、助力带、弹力带</p>
+                <div class="text-xs font-semibold text-orange-400 flex items-center gap-1 pt-1">
+                  进入选购 (小件满额包邮) <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 爆款推荐横幅 -->
+        <section class="bg-slate-100 py-12 px-6">
+          <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="space-y-3 max-w-lg">
+              <span class="px-2.5 py-1 rounded bg-orange-100 text-orange-700 text-xs font-bold uppercase">Shopify OS 2.0 模块化组件</span>
+              <h3 class="text-2xl font-black text-slate-900 uppercase">无代码自由拖拽运营</h3>
+              <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                全站基于 Shopify 最新 Sections Everywhere 架构开发，运营人员可随时随地在后台拖拽更换新品促销、调换 Banner、开启倒计时横幅，告别繁重代码介入。
+              </p>
+            </div>
+            <button onclick="switchTab('pdp')" class="px-6 py-3 rounded-lg bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider whitespace-nowrap">
+              体验商品详情页 (PDP) 交互 →
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 2: 商品详情页原型 (Product Detail Page - PDP Prototype) -->
+      <!-- =============================================================== -->
+      <div id="content-pdp" class="tab-content hidden p-6 sm:p-10 max-w-6xl mx-auto">
+        <!-- 面包屑导航 -->
+        <div class="text-xs text-slate-500 mb-6 flex items-center gap-2">
+          <a href="javascript:void(0)" onclick="switchTab('homepage')" class="hover:underline">Home</a>
+          <span>/</span>
+          <a href="javascript:void(0)" onclick="switchTab('megamenu')" class="hover:underline">Strength Equipment</a>
+          <span>/</span>
+          <span class="text-slate-900 font-semibold">AURA-R1 极限重工深蹲笼 (Power Rack)</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <!-- 左侧：多角度图片展示矩阵 (6 cols) -->
+          <div class="lg:col-span-7 space-y-4">
+            <!-- 主图查看器 -->
+            <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 aspect-square flex items-center justify-center text-white">
+              <div id="pdp-main-image" class="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-slate-900 to-slate-800">
+                <div class="w-32 h-32 rounded-full border-4 border-orange-500/40 flex items-center justify-center text-5xl mb-4 font-black">
+                  🏋️
+                </div>
+                <div class="text-xl font-bold uppercase tracking-wider text-white" id="pdp-image-title">
+                  AURA-R1 哑光黑商用深蹲架
+                </div>
+                <p class="text-xs text-slate-400 mt-2 max-w-xs" id="pdp-image-desc">
+                  正面全貌展示 · 3"x3" 11-Gauge 重工结构钢
+                </p>
+                <div class="absolute top-4 left-4 flex flex-col gap-2">
+                  <span class="px-2.5 py-1 rounded bg-orange-500 text-slate-950 text-xs font-black uppercase">
+                    商用重工级
+                  </span>
+                  <span class="px-2.5 py-1 rounded bg-slate-800/80 backdrop-blur text-white text-[11px] font-semibold">
+                    1000kg 极限静态承重
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 缩略图轮播 (点击切换主图状态) -->
+            <div class="grid grid-cols-4 gap-3">
+              <button onclick="changePdpImage(1)" class="pdp-thumb border-2 border-orange-500 rounded-xl p-2 bg-slate-50 text-center hover:bg-slate-100 transition-all">
+                <div class="text-lg">🏋️</div>
+                <div class="text-[11px] font-bold text-slate-800 mt-1">主视角</div>
+              </button>
+              <button onclick="changePdpImage(2)" class="pdp-thumb border border-slate-200 rounded-xl p-2 bg-slate-50 text-center hover:bg-slate-100 transition-all">
+                <div class="text-lg">🔍</div>
+                <div class="text-[11px] font-bold text-slate-800 mt-1">焊缝与孔位</div>
+              </button>
+              <button onclick="changePdpImage(3)" class="pdp-thumb border border-slate-200 rounded-xl p-2 bg-slate-50 text-center hover:bg-slate-100 transition-all">
+                <div class="text-lg">📐</div>
+                <div class="text-[11px] font-bold text-slate-800 mt-1">占地尺寸图</div>
+              </button>
+              <button onclick="changePdpImage(4)" class="pdp-thumb border border-slate-200 rounded-xl p-2 bg-slate-50 text-center hover:bg-slate-100 transition-all">
+                <div class="text-lg">🎬</div>
+                <div class="text-[11px] font-bold text-slate-800 mt-1">训练演示视频</div>
+              </button>
+            </div>
+
+            <!-- 结构化参数对比抽屉 (Accordion Specs) -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden mt-6 divide-y divide-slate-200">
+              <div class="p-4 bg-slate-50 flex items-center justify-between cursor-pointer font-bold text-sm text-slate-900">
+                <span>📐 详细工业规格与用料 (Specifications)</span>
+                <span class="text-slate-400 text-xs">标准商用认证</span>
+              </div>
+              <div class="p-4 text-xs space-y-2 bg-white">
+                <div class="grid grid-cols-2 gap-2 py-1 border-b border-slate-100">
+                  <span class="text-slate-500 font-medium">主体钢管规格:</span>
+                  <span class="font-bold text-slate-800">3" x 3" (75x75mm) 11-Gauge (3mm壁厚)</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 py-1 border-b border-slate-100">
+                  <span class="text-slate-500 font-medium">组装占地尺寸:</span>
+                  <span class="font-bold text-slate-800">长 135cm × 宽 125cm × 高 230cm</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 py-1 border-b border-slate-100">
+                  <span class="text-slate-500 font-medium">整架净重 (Net Weight):</span>
+                  <span class="font-bold text-slate-800">145 kg (320 lbs) - 重型托盘运输</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 py-1">
+                  <span class="text-slate-500 font-medium">立柱孔距标准:</span>
+                  <span class="font-bold text-slate-800">Westside 1寸精密间距 (标号激光刻度)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧：选购决策与变体选择器 (5 cols) -->
+          <div class="lg:col-span-5 space-y-6">
+            <!-- 标题与星级 -->
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <div class="flex text-amber-400 text-sm">★★★★★</div>
+                <span class="text-xs font-bold text-slate-700">4.95 星好评</span>
+                <a href="#reviews-section" class="text-xs text-orange-600 hover:underline">(128 条认证专业买家评测)</a>
+              </div>
+              <h1 class="text-2xl sm:text-3xl font-black text-slate-950 uppercase tracking-tight">
+                AURA-R1 极限重工深蹲笼
+              </h1>
+              <p class="text-xs text-slate-500">SKU: AF-STR-R1-BLK · 现货储备 (3-5个工作日专线出库)</p>
+            </div>
+
+            <!-- 价格与分期付款引导 (Klarna / Shop Pay) -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="flex items-baseline gap-3">
+                <span class="text-3xl font-black text-slate-950" id="pdp-price">$1,299.00</span>
+                <span class="text-sm text-slate-400 line-through">$1,599.00</span>
+                <span class="px-2 py-0.5 rounded bg-red-100 text-red-700 text-xs font-bold">立省 $300</span>
+              </div>
+              <div class="text-xs text-slate-600 flex items-center gap-1.5 pt-1">
+                <span class="font-semibold text-slate-800">Klarna. / Shop Pay 分期：</span>
+                <span>每月仅需 <strong>$108.25</strong> (12期 0利率免息)</span>
+              </div>
+            </div>
+
+            <!-- 变体 1: 涂层颜色选择器 -->
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                选择框架涂层 (Frame Coating): <span id="color-label" class="text-orange-600">哑光战术黑 (Matte Black)</span>
+              </label>
+              <div class="flex gap-3">
+                <button onclick="selectColor('Matte Black')" class="color-btn border-2 border-orange-500 px-4 py-2 rounded-lg text-xs font-bold bg-white text-slate-900 shadow-sm flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-slate-900 inline-block border border-slate-700"></span>
+                  哑光战术黑
+                </button>
+                <button onclick="selectColor('Industrial Grey')" class="color-btn border border-slate-200 px-4 py-2 rounded-lg text-xs font-bold bg-white text-slate-600 hover:border-slate-400 flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-slate-400 inline-block border border-slate-300"></span>
+                  工业金属灰
+                </button>
+              </div>
+            </div>
+
+            <!-- 变体 2: 立柱高度与配置选择器 -->
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                立柱高度 (Clearance Height):
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <button onclick="selectHeight(this, 0)" class="height-btn border-2 border-orange-500 rounded-lg p-3 text-left bg-white text-slate-900">
+                  <div class="font-bold text-xs">210 cm (82.6")</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">标准低地下室空间</div>
+                </button>
+                <button onclick="selectHeight(this, 150)" class="height-btn border border-slate-200 rounded-lg p-3 text-left bg-white text-slate-600 hover:border-slate-400">
+                  <div class="font-bold text-xs">235 cm (92.5") <span class="text-orange-600">+$150</span></div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">商用标准高空引体</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- 核心功能：大件运费预估组件 (Shipping & Freight Calculator Widget) -->
+            <div class="border border-amber-200 bg-amber-50/70 rounded-xl p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2 text-xs font-bold text-amber-900">
+                  <span>🚛 大件货运专线物流 (LTL Freight)</span>
+                </div>
+                <span class="text-[11px] text-amber-800 font-medium">重货专线保护</span>
+              </div>
+              <p class="text-[11px] text-amber-800 leading-tight">
+                本商品毛重达 145kg，由 LTL 专线卡车托盘派送。输入邮政编码可实时获取精准运费与预计到达时效：
+              </p>
+              <div class="flex gap-2">
+                <input type="text" id="shipping-zip" placeholder="输入邮编 (例如 90210)" value="90210" class="flex-1 bg-white border border-amber-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <button onclick="calculateFreight()" class="px-4 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-bold text-xs">
+                  测算运费
+                </button>
+              </div>
+              <div id="shipping-result" class="text-xs text-amber-950 font-semibold bg-white/80 p-2.5 rounded-lg border border-amber-200 flex items-center justify-between">
+                <span>📍 目的地: 加州 (Zone 8)</span>
+                <span class="text-orange-700 font-bold">托盘路边卸货: $120.00 (预计 3-5 天)</span>
+              </div>
+            </div>
+
+            <!-- 购买与加购 CTA -->
+            <div class="space-y-3 pt-2">
+              <button onclick="alert('加购成功！已添加 AURA-R1 极限深蹲架至您的购物车。')" class="w-full py-4 rounded-xl bg-orange-500 hover:bg-orange-600 text-slate-950 font-black text-sm uppercase tracking-wider transition-all shadow-xl shadow-orange-500/25 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                <span>立即加入购物车 (ADD TO CART)</span>
+              </button>
+              <button class="w-full py-3.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-white font-bold text-xs uppercase tracking-wider">
+                使用 Shop Pay 一键急速结账
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 真实买家评价模块 (Reviews & Ratings) -->
+        <section id="reviews-section" class="mt-16 pt-12 border-t border-slate-200">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div>
+              <h2 class="text-2xl font-black text-slate-950 uppercase tracking-tight">客户真实体验评测 (Reviews)</h2>
+              <p class="text-xs text-slate-500 mt-1">通过 Judge.me 独立验真 · 支持 Google Rich Snippets 星级展现</p>
+            </div>
+            <button class="px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">
+              撰写器材使用评价 ✍️
+            </button>
+          </div>
+
+          <!-- 评价数据总览卡片 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 rounded-2xl bg-slate-50 border border-slate-200 mb-8 items-center">
+            <div class="text-center md:border-r border-slate-200">
+              <div class="text-5xl font-black text-slate-950">4.95</div>
+              <div class="text-amber-500 text-lg my-1">★★★★★</div>
+              <div class="text-xs text-slate-500">基于 128 位认证力量买家</div>
+            </div>
+            <div class="space-y-1.5 md:col-span-2 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-12 text-slate-500 font-medium">5 星好评</span>
+                <div class="flex-1 bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-400 h-full w-[94%]"></div>
+                </div>
+                <span class="w-8 text-right font-bold text-slate-700">94%</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-12 text-slate-500 font-medium">4 星满意</span>
+                <div class="flex-1 bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-400 h-full w-[5%]"></div>
+                </div>
+                <span class="w-8 text-right font-bold text-slate-700">5%</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-12 text-slate-500 font-medium">3 星中评</span>
+                <div class="flex-1 bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-400 h-full w-[1%]"></div>
+                </div>
+                <span class="w-8 text-right font-bold text-slate-700">1%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 评价列表样本 -->
+          <div class="space-y-4">
+            <div class="p-5 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-xs text-slate-900">David M.</span>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">✓ 认证购买 (Verified Buyer)</span>
+                  <span class="text-slate-400 text-xs">· 居家力量房用户</span>
+                </div>
+                <div class="text-amber-400 text-xs">★★★★★</div>
+              </div>
+              <div class="font-bold text-xs text-slate-900">“绝对的坦克级用料！立柱孔距极其精准”</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                收到货包装在木质托盘上，没有一丝划痕。3x3 的钢管厚重感十足，引体向上和做 220kg 深蹲出杠完全没有晃动感。运费很透明，物流司机用液压车帮我拉到了车库门口。极力推荐！
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 3: Mega Menu 导航层级 (Information Architecture) -->
+      <!-- =============================================================== -->
+      <div id="content-megamenu" class="tab-content hidden p-6 sm:p-10 max-w-6xl mx-auto">
+        <div class="mb-8">
+          <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Navigation Architecture</span>
+          <h2 class="text-2xl font-black text-slate-950 uppercase tracking-tight">Mega Menu 全站导航层级设计</h2>
+          <p class="text-xs text-slate-500 mt-1">专为解决健身器材多规格、大分类的跨品类导购体验</p>
+        </div>
+
+        <!-- 模拟 Mega Menu 下拉交互卡片 -->
+        <div class="bg-slate-900 text-white rounded-2xl p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between pb-6 border-b border-slate-800 mb-6">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 rounded-full bg-orange-500 text-slate-950 font-black text-xs">力量训练 (STRENGTH) 下拉层级展示</span>
+              <span class="text-xs text-slate-400">支持图文混合推荐</span>
+            </div>
+            <span class="text-xs text-slate-400">按 ESC 键或移出关闭</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- 栏目 1: 自由重量 -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-black uppercase text-orange-400 tracking-wider flex items-center gap-1.5">
+                <span>●</span> 自由重量 (Free Weights)
+              </h4>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li class="hover:text-orange-400 cursor-pointer font-medium">可调节哑铃组 (Adjustable Dumbbells)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">六角包胶哑铃 (Rubber Hex)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">奥林匹克竞赛杠铃杆 (Olympic Bars)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">竞技包胶杠铃片 (Bumper Plates)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">铸铁力量配重片 (Cast Iron)</li>
+              </ul>
+            </div>
+
+            <!-- 栏目 2: 框架与大器械 -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-black uppercase text-orange-400 tracking-wider flex items-center gap-1.5">
+                <span>●</span> 重型框架 (Racks & Cages)
+              </h4>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li onclick="switchTab('pdp')" class="text-orange-400 font-bold cursor-pointer">全尺寸商用深蹲笼 (Power Racks) ★</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">半框深蹲架 (Half Racks)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">折叠上墙节省空间架 (Wall-mount)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">龙门综合训练器 (Cable Crossovers)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">可调多功能卧推凳 (Adjustable Benches)</li>
+              </ul>
+            </div>
+
+            <!-- 栏目 3: 框架扩展配件 -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-black uppercase text-orange-400 tracking-wider flex items-center gap-1.5">
+                <span>●</span> 扩展挂件 (Attachments)
+              </h4>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li class="hover:text-orange-400 cursor-pointer font-medium">J-Hook 保护挂钩组</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">双杠臂支撑挂件 (Dip Horns)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">安全织带保护绳 (Safety Straps)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">高位下拉滑轮系统 (Lat Pulldown)</li>
+                <li class="hover:text-orange-400 cursor-pointer font-medium">杠铃地雷管 (Landmines)</li>
+              </ul>
+            </div>
+
+            <!-- 栏目 4: 推荐单品 / 套装卡片 (Featured Teaser) -->
+            <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700 space-y-3 flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-orange-500/20 text-orange-400">
+                  本季最佳新手包
+                </span>
+                <h5 class="text-sm font-bold text-white mt-2">Home Gym Starter Bundle</h5>
+                <p class="text-[11px] text-slate-400 mt-1">包含深蹲架 + 20kg 杠铃杆 + 100kg 杠铃片组，立省 $450。</p>
+              </div>
+              <button onclick="switchTab('pdp')" class="w-full py-2 bg-orange-500 hover:bg-orange-600 text-slate-950 font-bold text-xs rounded-lg transition-colors">
+                查看套装详情 →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 4: 视觉规范与调色板 (Design System & Color Tokens) -->
+      <!-- =============================================================== -->
+      <div id="content-design-system" class="tab-content hidden p-6 sm:p-10 max-w-6xl mx-auto space-y-10">
+        <div>
+          <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Design System & Guidelines</span>
+          <h2 class="text-2xl font-black text-slate-950 uppercase tracking-tight">品牌视觉规范与设计系统 (AURA FORGE)</h2>
+          <p class="text-xs text-slate-500 mt-1">以硬核重工、极简现代、高激励感为核心的工业电商规范</p>
+        </div>
+
+        <!-- 1. 调色板 Tokens -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">1. 核心调色板 (Color Palette)</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+            <div class="space-y-1.5">
+              <div class="h-20 rounded-xl bg-slate-950 shadow-inner flex items-end p-2 text-white font-mono text-[11px]">#0F1115</div>
+              <div class="font-bold text-xs text-slate-900">Carbon Black (炭黑主底)</div>
+              <div class="text-[11px] text-slate-500">主标题、Hero 区块背景</div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-20 rounded-xl bg-orange-500 shadow-inner flex items-end p-2 text-slate-950 font-mono text-[11px] font-bold">#F97316</div>
+              <div class="font-bold text-xs text-slate-900">Volt Orange (战术橙)</div>
+              <div class="text-[11px] text-slate-500">核心 CTA、关键强调、焦点边框</div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-20 rounded-xl bg-slate-800 shadow-inner flex items-end p-2 text-white font-mono text-[11px]">#1E293B</div>
+              <div class="font-bold text-xs text-slate-900">Steel Gray (工业钢灰)</div>
+              <div class="text-[11px] text-slate-500">次级卡片背景、边框分界线</div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-20 rounded-xl bg-slate-100 shadow-inner flex items-end p-2 text-slate-700 font-mono text-[11px] border border-slate-200">#F1F5F9</div>
+              <div class="font-bold text-xs text-slate-900">Pure Off-White (极简白)</div>
+              <div class="text-[11px] text-slate-500">页面底色、规格表格底色</div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-20 rounded-xl bg-amber-500 shadow-inner flex items-end p-2 text-slate-950 font-mono text-[11px] font-bold">#F59E0B</div>
+              <div class="font-bold text-xs text-slate-900">Gold Star (评测金)</div>
+              <div class="text-[11px] text-slate-500">评测星级、大件物流警告提示</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 排版规范 Typography -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">2. 字体与排版层级 (Typography Hierarchy)</h3>
+          <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-200 pb-3">
+              <span class="text-xs font-mono text-slate-400">Display / Hero (48px - 64px, 900 Black)</span>
+              <span class="text-3xl font-black uppercase text-slate-950 tracking-tight">HEAVY DUTY POWER RACK</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-200 pb-3">
+              <span class="text-xs font-mono text-slate-400">Heading 1 / PDP Title (24px - 32px, 800 ExtraBold)</span>
+              <span class="text-xl font-extrabold uppercase text-slate-900">AURA-R1 COMMERCIAL CAGE</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-200 pb-3">
+              <span class="text-xs font-mono text-slate-400">Specs & Numbers (14px - 16px, Monospace Bold)</span>
+              <span class="text-sm font-mono font-bold text-orange-600">3" x 3" 11-GAUGE STEEL · 1000KG CAPACITY</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between">
+              <span class="text-xs font-mono text-slate-400">Body Text (14px Regular, Leading Relaxed)</span>
+              <span class="text-xs text-slate-600 max-w-md">Precision engineered with Westside 1-inch hole spacing throughout the bench and clean pull-up bar integration.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. UI 按钮与徽章规范 -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">3. 交互按钮与特殊徽章 (Components & Badges)</h3>
+          <div class="p-6 bg-white rounded-2xl border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="space-y-2">
+              <span class="text-xs text-slate-400 font-mono">Primary CTA Button</span>
+              <button class="w-full py-3 rounded-lg bg-orange-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/20">
+                ADD TO CART ($1,299.00)
+              </button>
+            </div>
+            <div class="space-y-2">
+              <span class="text-xs text-slate-400 font-mono">Secondary / Outlined</span>
+              <button class="w-full py-3 rounded-lg border-2 border-slate-900 text-slate-900 font-bold text-xs uppercase hover:bg-slate-900 hover:text-white transition-all">
+                CUSTOMIZE BUNDLE
+              </button>
+            </div>
+            <div class="space-y-2">
+              <span class="text-xs text-slate-400 font-mono">Specialized Shipping Badges</span>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <span class="badge-freight px-2.5 py-1 rounded-md text-[11px] font-bold">🚛 LTL Freight Only</span>
+                <span class="badge-warranty px-2.5 py-1 rounded-md text-[11px] font-bold">🛡️ Lifetime Frame</span>
+                <span class="bg-slate-100 text-slate-800 px-2.5 py-1 rounded-md text-[11px] font-bold border border-slate-200">📦 Ground Shipping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 交互逻辑 Script -->
+  <script>
+    // 选项卡切换
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('block'));
+      
+      const target = document.getElementById('content-' + tabId);
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('block');
+      }
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-orange-500', 'text-white', 'font-semibold');
+        btn.classList.add('text-slate-400');
+      });
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-orange-500', 'text-white', 'font-semibold');
+        activeBtn.classList.remove('text-slate-400');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 视口切换 (桌面 vs 移动)
+    function setViewport(mode) {
+      const container = document.getElementById('viewport-container');
+      const btnDesk = document.getElementById('vp-desktop');
+      const btnMob = document.getElementById('vp-mobile');
+
+      if (mode === 'mobile') {
+        container.style.maxWidth = '390px';
+        btnMob.classList.add('bg-slate-800', 'text-orange-400', 'font-medium');
+        btnMob.classList.remove('text-slate-400');
+        btnDesk.classList.remove('bg-slate-800', 'text-orange-400', 'font-medium');
+        btnDesk.classList.add('text-slate-400');
+      } else {
+        container.style.maxWidth = '80rem'; // 7xl
+        btnDesk.classList.add('bg-slate-800', 'text-orange-400', 'font-medium');
+        btnDesk.classList.remove('text-slate-400');
+        btnMob.classList.remove('bg-slate-800', 'text-orange-400', 'font-medium');
+        btnMob.classList.add('text-slate-400');
+      }
+    }
+
+    // PDP 图片切换
+    function changePdpImage(index) {
+      const titleEl = document.getElementById('pdp-image-title');
+      const descEl = document.getElementById('pdp-image-desc');
+      
+      document.querySelectorAll('.pdp-thumb').forEach(el => {
+        el.classList.remove('border-orange-500', 'border-2');
+        el.classList.add('border-slate-200', 'border');
+      });
+      event.currentTarget.classList.add('border-orange-500', 'border-2');
+      event.currentTarget.classList.remove('border-slate-200', 'border');
+
+      if (index === 1) {
+        titleEl.textContent = 'AURA-R1 哑光黑商用深蹲架';
+        descEl.textContent = '正面全貌展示 · 3"x3" 11-Gauge 重工结构钢';
+      } else if (index === 2) {
+        titleEl.textContent = 'Westside 1寸精密间距孔位与激光焊缝';
+        descEl.textContent = '精细微距放大视图 · 机器人精密焊接保证 1000kg 结构稳定性';
+      } else if (index === 3) {
+        titleEl.textContent = '占地尺寸与空间规划示意图';
+        descEl.textContent = '长 135cm × 宽 125cm × 高 230cm · 建议预留 2.5m x 2m 操作区域';
+      } else if (index === 4) {
+        titleEl.textContent = '动作实操与大重量深蹲缓冲测评视频';
+        descEl.textContent = '220kg 杠铃出杠缓冲与安全织带跌落抗压测试';
+      }
+    }
+
+    // PDP 变体选择逻辑
+    let basePrice = 1299;
+    let heightExtra = 0;
+
+    function selectColor(colorName) {
+      document.getElementById('color-label').textContent = colorName;
+      document.querySelectorAll('.color-btn').forEach(btn => {
+        btn.classList.remove('border-2', 'border-orange-500');
+        btn.classList.add('border', 'border-slate-200');
+      });
+      event.currentTarget.classList.add('border-2', 'border-orange-500');
+      event.currentTarget.classList.remove('border', 'border-slate-200');
+    }
+
+    function selectHeight(btn, extra) {
+      heightExtra = extra;
+      document.querySelectorAll('.height-btn').forEach(b => {
+        b.classList.remove('border-2', 'border-orange-500');
+        b.classList.add('border', 'border-slate-200');
+      });
+      btn.classList.add('border-2', 'border-orange-500');
+      btn.classList.remove('border', 'border-slate-200');
+      updatePrice();
+    }
+
+    function updatePrice() {
+      const finalPrice = basePrice + heightExtra;
+      document.getElementById('pdp-price').textContent = '$' + finalPrice.toFixed(2);
+    }
+
+    // 运费测算
+    function calculateFreight() {
+      const zip = document.getElementById('shipping-zip').value.trim();
+      const resEl = document.getElementById('shipping-result');
+      if (!zip) {
+        resEl.innerHTML = '<span class="text-red-600">请输入有效美国邮编</span>';
+        return;
+      }
+      resEl.innerHTML = `
+        <span>📍 目的地: Zip ${zip} (LTL 专线覆盖)</span>
+        <span class="text-orange-700 font-bold">托盘路边送达: $120.00 (预计 3-5 个工作日)</span>
+      `;
+    }
+  </script>
+</body>
+</html>

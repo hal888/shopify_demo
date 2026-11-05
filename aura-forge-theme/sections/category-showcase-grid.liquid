@@ -1,0 +1,172 @@
+<div class="category-showcase">
+  <div class="category-showcase__header">
+    <div>
+      {%- if section.settings.subheading != blank -%}
+        <div style="font-size: 1.2rem; font-weight: 800; color: var(--af-orange); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem;">
+          {{ section.settings.subheading }}
+        </div>
+      {%- endif -%}
+      <h2 style="font-size: clamp(2rem, 3vw, 3rem); font-weight: 900; color: var(--af-black); text-transform: uppercase; margin: 0;">
+        {{ section.settings.heading }}
+      </h2>
+    </div>
+
+    {%- if section.settings.view_all_link != blank -%}
+      <a href="{{ section.settings.view_all_link }}" style="font-size: 1.3rem; font-weight: 700; color: var(--af-black); text-decoration: none;">
+        {{ section.settings.view_all_label | default: '查看全部器材 →' }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="category-showcase__grid">
+    {%- for block in section.blocks -%}
+      <a
+        {% if block.settings.link == blank %}
+          role="link" aria-disabled="true"
+        {% else %}
+          href="{{ block.settings.link }}"
+        {% endif %}
+        class="category-card"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.image != blank -%}
+          {{
+            block.settings.image
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              class: 'category-card__image',
+              widths: '400, 600, 800'
+          }}
+        {%- endif -%}
+
+        <div class="category-card__gradient"></div>
+
+        <div class="category-card__content">
+          {%- if block.settings.badge_text != blank -%}
+            <span class="af-badge af-badge--accent" style="margin-bottom: 0.8rem; font-size: 1rem;">
+              {{ block.settings.badge_text }}
+            </span>
+          {%- endif -%}
+
+          <h3 class="category-card__title">{{ block.settings.title }}</h3>
+          <p class="category-card__desc">{{ block.settings.description }}</p>
+          <div class="category-card__cta">
+            {{ block.settings.cta_text | default: '立即选购' }} <span>→</span>
+          </div>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AURA 三大核心品类卡片",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "小标题 (Uppercase)",
+      "default": "Core Equipment Categories"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "大标题",
+      "default": "专业健身器材分类"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "查看全品类链接"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "查看全品类文字",
+      "default": "全部器材清单 →"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "品类卡片",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "卡片封面图"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "角标提示",
+          "default": "重磅旗舰"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "分类名称",
+          "default": "力量训练 (Strength)"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "分类简述",
+          "default": "深蹲架、卧推凳、奥林匹克杠铃杆、可调哑铃"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "引导动作文本",
+          "default": "进入力量区"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "跳转链接"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "AURA 三大核心品类卡片",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "badge_text": "旗舰热销",
+            "title": "力量训练 (Strength)",
+            "description": "深蹲架、多功能卧推凳、奥林匹克竞技杠铃、包胶哑铃",
+            "cta_text": "选购力量器材"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "badge_text": "高效燃脂",
+            "title": "有氧器械 (Cardio)",
+            "description": "商用风阻划船机、静音磁控动感单车、滑雪训练机",
+            "cta_text": "选购有氧器械"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "badge_text": "满额包邮",
+            "title": "配件周边 (Accessories)",
+            "description": "专业防滑橡胶地垫、快速安全卡扣、训练护腕、阻力带",
+            "cta_text": "选购精选配件"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

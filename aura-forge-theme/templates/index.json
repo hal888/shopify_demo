@@ -1,0 +1,148 @@
+{
+  "sections": {
+    "hero_motivating": {
+      "type": "hero-banner-motivating",
+      "settings": {
+        "overlay_opacity": 75,
+        "min_height": 55,
+        "badge_text": "商用级 11-Gauge 重工结构 · 终身框架质保",
+        "heading": "铸就极致力量 <strong>PRO-SERIES HOME GYM</strong>",
+        "subheading": "专为严苛力量训练而生。从微型空间可调哑铃到专业级全尺寸深蹲笼，精准参数、极简美学，打造您专属的顶级训练阵地。",
+        "button_label_1": "选购旗舰深蹲架",
+        "button_link_1": "shopify://collections/all",
+        "button_label_2": "浏览全线器材",
+        "button_link_2": "shopify://collections/all",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "trust_signals": {
+      "type": "trust-signals-bar",
+      "blocks": {
+        "signal_1": {
+          "type": "signal",
+          "settings": {
+            "icon": "🔩",
+            "title": "11-Gauge 工业钢材",
+            "description": "3\" x 3\" 重工立柱与精密激光孔位"
+          }
+        },
+        "signal_2": {
+          "type": "signal",
+          "settings": {
+            "icon": "🚛",
+            "title": "专业 LTL 托盘送达",
+            "description": "重货专线入户保障与运损包赔"
+          }
+        },
+        "signal_3": {
+          "type": "signal",
+          "settings": {
+            "icon": "🛡️",
+            "title": "终身主框架质保",
+            "description": "商用级焊接工艺 · 终身质保承诺"
+          }
+        },
+        "signal_4": {
+          "type": "signal",
+          "settings": {
+            "icon": "⭐",
+            "title": "4.9 / 5.0 好评认证",
+            "description": "2,500+ 专业力量馆与家庭背书"
+          }
+        }
+      },
+      "block_order": [
+        "signal_1",
+        "signal_2",
+        "signal_3",
+        "signal_4"
+      ],
+      "settings": {
+        "background_color": "#F8FAFC",
+        "padding_top": 25,
+        "padding_bottom": 25
+      }
+    },
+    "category_showcase": {
+      "type": "category-showcase-grid",
+      "blocks": {
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "badge_text": "旗舰热销",
+            "title": "力量训练 (Strength)",
+            "description": "全尺寸深蹲笼、多功能卧推凳、奥林匹克竞技杠铃杆、可调哑铃",
+            "cta_text": "选购力量器材",
+            "link": "shopify://collections/all"
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "badge_text": "高效燃脂",
+            "title": "有氧器械 (Cardio)",
+            "description": "商用风阻划船机、静音磁控动感单车、滑雪训练机",
+            "cta_text": "选购有氧器械",
+            "link": "shopify://collections/all"
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "badge_text": "满额包邮",
+            "title": "配件周边 (Accessories)",
+            "description": "专业防滑橡胶地垫、快速安全卡扣、训练护腕、高弹阻力带",
+            "cta_text": "选购精选配件",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3"
+      ],
+      "settings": {
+        "subheading": "Core Equipment Categories",
+        "heading": "核心健身器材分类",
+        "view_all_link": "shopify://collections/all",
+        "view_all_label": "全部器材清单 →"
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "本季热销精选 (Trending Gear)",
+        "heading_size": "h2",
+        "description": "<p>严格通过 1000kg 结构抗晃与高频摔杠测试的专业力量装备</p>",
+        "show_description": true,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "swipe_on_mobile": true,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "padding_top": 44,
+        "padding_bottom": 44
+      }
+    }
+  },
+  "order": [
+    "hero_motivating",
+    "trust_signals",
+    "category_showcase",
+    "featured_collection"
+  ]
+}

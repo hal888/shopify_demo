@@ -1,0 +1,494 @@
+/* ==========================================================================
+   AURA FORGE - Specialized Fitness & Gym Equipment Theme Stylesheet
+   Version: 1.0.0
+   Brand: AURA FORGE DTC Storefront
+   ========================================================================== */
+
+:root {
+  --af-black: #0F1115;
+  --af-orange: #F97316;
+  --af-orange-hover: #EA580C;
+  --af-steel: #1E293B;
+  --af-slate-dark: #334155;
+  --af-surface: #F8FAFC;
+  --af-border: #E2E8F0;
+  --af-amber: #D97706;
+  --af-amber-bg: #FEF3C7;
+  --af-gold: #F59E0B;
+  --af-green: #059669;
+  --af-green-bg: #D1FAE5;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* ==========================================================================
+   1. Typography & Global Polish
+   ========================================================================== */
+.font-mono-spec {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+
+.text-brand-orange {
+  color: var(--af-orange) !important;
+}
+
+.bg-brand-orange {
+  background-color: var(--af-orange) !important;
+  color: var(--af-black) !important;
+}
+
+.bg-brand-black {
+  background-color: var(--af-black) !important;
+  color: #FFFFFF !important;
+}
+
+.button--primary-orange {
+  background-color: var(--af-orange);
+  color: var(--af-black);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.button--primary-orange:hover {
+  background-color: var(--af-orange-hover);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+}
+
+/* ==========================================================================
+   2. Professional Equipment Badges
+   ========================================================================== */
+.af-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.af-badge--freight {
+  background-color: var(--af-amber-bg);
+  color: #92400E;
+  border: 1px solid #FCD34D;
+}
+
+.af-badge--warranty {
+  background-color: var(--af-green-bg);
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.af-badge--commercial {
+  background-color: #0F172A;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+}
+
+.af-badge--accent {
+  background-color: var(--af-orange);
+  color: var(--af-black);
+}
+
+/* ==========================================================================
+   3. Trust Signals Bar (四大信任背书)
+   ========================================================================== */
+.trust-signals-bar {
+  background: #F8FAFC;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 2.2rem 1.5rem;
+}
+
+.trust-signals-container {
+  max-width: 120rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  .trust-signals-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.trust-signal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.trust-signal-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.trust-signal-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--af-black);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.trust-signal-desc {
+  font-size: 1.2rem;
+  color: var(--af-slate-dark);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   4. Hero Motivating Section
+   ========================================================================== */
+.hero-motivating {
+  position: relative;
+  background-color: var(--af-black);
+  color: #FFFFFF;
+  overflow: hidden;
+  padding: 8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52rem;
+}
+
+.hero-motivating__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+  filter: contrast(110%);
+}
+
+.hero-motivating__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(15,17,21,0.4) 0%, rgba(15,17,21,0.92) 100%);
+}
+
+.hero-motivating__content {
+  position: relative;
+  z-index: 2;
+  max-width: 80rem;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hero-motivating__heading {
+  font-size: clamp(3.2rem, 5vw, 6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.6rem;
+  color: #FFFFFF;
+}
+
+.hero-motivating__heading strong,
+.hero-motivating__heading b,
+.hero-motivating__heading mark {
+  background: transparent;
+  color: var(--af-orange);
+  font-weight: inherit;
+}
+
+.hero-motivating__subtext {
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  color: #CBD5E1;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-motivating__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   5. Category Showcase Grid
+   ========================================================================== */
+.category-showcase {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.category-showcase__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.category-showcase__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .category-showcase__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.category-card {
+  position: relative;
+  height: 36rem;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.4rem;
+  color: #FFFFFF;
+  text-decoration: none;
+  background-color: var(--af-steel);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+}
+
+.category-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.category-card:hover .category-card__image {
+  transform: scale(1.05);
+}
+
+.category-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.85) 85%);
+  z-index: 2;
+}
+
+.category-card__content {
+  position: relative;
+  z-index: 3;
+}
+
+.category-card__title {
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  color: #FFFFFF;
+}
+
+.category-card__desc {
+  font-size: 1.2rem;
+  color: #E2E8F0;
+  margin-bottom: 1rem;
+}
+
+.category-card__cta {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--af-orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ==========================================================================
+   6. LTL Freight & Shipping Estimator Widget (PDP)
+   ========================================================================== */
+.freight-calculator-widget {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 8px;
+  padding: 1.6rem;
+  margin: 1.8rem 0;
+}
+
+.freight-calculator-widget__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.freight-calculator-widget__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #78350F;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-transform: uppercase;
+}
+
+.freight-calculator-widget__input-row {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.freight-calculator-widget__input {
+  flex: 1;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #D97706;
+  border-radius: 6px;
+  font-size: 1.3rem;
+  background: #FFFFFF;
+  color: var(--af-black);
+}
+
+.freight-calculator-widget__button {
+  padding: 0.8rem 1.4rem;
+  background: #B45309;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.freight-calculator-widget__button:hover {
+  background: #92400E;
+}
+
+.freight-calculator-widget__result {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #FCD34D;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #78350F;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   7. PDP Industrial Specifications Table
+   ========================================================================== */
+.pdp-specs-container {
+  border: 1px solid var(--af-border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.pdp-specs-header {
+  background: #F1F5F9;
+  padding: 1.2rem 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--af-black);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pdp-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pdp-specs-table tr {
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.pdp-specs-table tr:last-child {
+  border-bottom: none;
+}
+
+.pdp-specs-table td {
+  padding: 1rem 1.6rem;
+  font-size: 1.3rem;
+}
+
+.pdp-specs-table td.spec-label {
+  color: var(--af-slate-dark);
+  font-weight: 500;
+  width: 40%;
+}
+
+.pdp-specs-table td.spec-value {
+  color: var(--af-black);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   8. Mobile Sticky Add To Cart Bar
+   ========================================================================== */
+.mobile-sticky-cart {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 17, 21, 0.95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid #334155;
+  padding: 1rem 1.6rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .mobile-sticky-cart {
+    display: none;
+  }
+}
+
+.mobile-sticky-cart__price {
+  color: #FFFFFF;
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+.mobile-sticky-cart__btn {
+  background: var(--af-orange);
+  color: var(--af-black);
+  font-weight: 800;
+  font-size: 1.3rem;
+  padding: 1rem 1.8rem;
+  border-radius: 6px;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+

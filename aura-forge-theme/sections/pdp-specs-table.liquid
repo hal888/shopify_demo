@@ -1,0 +1,104 @@
+<div class="page-width">
+  <div class="pdp-specs-container">
+    <div class="pdp-specs-header">
+      <span>📐 {{ section.settings.heading | default: '详细工业规格与用料 (Specifications)' }}</span>
+      <span class="af-badge af-badge--commercial">{{ section.settings.badge_text | default: '标准商用认证' }}</span>
+    </div>
+
+    <table class="pdp-specs-table">
+      <tbody>
+        {%- for block in section.blocks -%}
+          <tr {{ block.shopify_attributes }}>
+            <td class="spec-label">{{ block.settings.label }}</td>
+            <td class="spec-value">{{ block.settings.value }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AURA 器材工业规格参数表",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "参数区标题",
+      "default": "详细工业规格与用料 (Specifications)"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "认证徽章文字",
+      "default": "商用重工标准"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec_row",
+      "name": "参数行",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "参数项目",
+          "default": "主体钢管规格"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "参数数值",
+          "default": "3\" x 3\" (75x75mm) 11-Gauge 优质结构钢"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "AURA 器材工业规格参数表",
+      "blocks": [
+        {
+          "type": "spec_row",
+          "settings": {
+            "label": "主体钢管用料",
+            "value": "3\" x 3\" (75x75mm) 11-Gauge (3mm壁厚)"
+          }
+        },
+        {
+          "type": "spec_row",
+          "settings": {
+            "label": "组装占地尺寸",
+            "value": "长 135cm × 宽 125cm × 高 230cm"
+          }
+        },
+        {
+          "type": "spec_row",
+          "settings": {
+            "label": "整机净重 (Net Weight)",
+            "value": "145 kg (320 lbs) - 专线托盘重货"
+          }
+        },
+        {
+          "type": "spec_row",
+          "settings": {
+            "label": "极限静态承重",
+            "value": "1000 kg (2,200 lbs) 结构防晃认证"
+          }
+        },
+        {
+          "type": "spec_row",
+          "settings": {
+            "label": "立柱调节孔距",
+            "value": "Westside 1寸精密激光打孔带刻度"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

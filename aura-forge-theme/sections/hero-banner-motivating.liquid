@@ -1,0 +1,178 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="hero-motivating section-{{ section.id }}-padding" style="min-height: {{ section.settings.min_height }}rem;">
+  {%- if section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 2800
+      | image_tag:
+        loading: 'eager',
+        class: 'hero-motivating__bg',
+        widths: '750, 1100, 1500, 2000, 2800'
+    }}
+  {%- endif -%}
+
+  <div class="hero-motivating__overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+
+  <div class="hero-motivating__content">
+    {%- if section.settings.badge_text != blank -%}
+      <div class="af-badge af-badge--accent" style="margin-bottom: 1.6rem;">
+        ⚡ {{ section.settings.badge_text }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="hero-motivating__heading">
+        {{ section.settings.heading }}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero-motivating__subtext">
+        {{ section.settings.subheading }}
+      </p>
+    {%- endif -%}
+
+    <div class="hero-motivating__buttons">
+      {%- if section.settings.button_label_1 != blank -%}
+        <a
+          {% if section.settings.button_link_1 == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.button_link_1 }}"
+          {% endif %}
+          class="button button--primary-orange"
+        >
+          {{ section.settings.button_label_1 | escape }} →
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.button_label_2 != blank -%}
+        <a
+          {% if section.settings.button_link_2 == blank %}
+            role="link" aria-disabled="true"
+          {% else %}
+            href="{{ section.settings.button_link_2 }}"
+          {% endif %}
+          class="button button--secondary"
+          style="background: rgba(30, 41, 59, 0.85); color: #FFFFFF; border: 1px solid #475569;"
+        >
+          {{ section.settings.button_label_2 | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AURA 高燃 Hero 横幅",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "背景大图 (High-Res Gym Imagery)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "暗色遮罩不透明度",
+      "default": 75
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "min": 35,
+      "max": 80,
+      "step": 5,
+      "unit": "rem",
+      "label": "最小高度 (rem)",
+      "default": 55
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "顶部高能徽章文本",
+      "default": "商用级 11-Gauge 重工结构 · 终身框架质保"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "主标题 (支持粗体和高亮文字)",
+      "default": "铸就极致力量 <strong>PRO-SERIES HOME GYM</strong>"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "副标题描述",
+      "default": "专为严苛力量训练而生。从微型空间可调哑铃到专业级全尺寸深蹲笼，精准参数、极简美学，打造您专属的顶级训练阵地。"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "主按钮文本",
+      "default": "选购旗舰深蹲架"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "主按钮链接"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "次按钮文本",
+      "default": "浏览全线器材"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "次按钮链接"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "上内边距",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "下内边距",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "AURA 高燃 Hero 横幅"
+    }
+  ]
+}
+{% endschema %}
+
